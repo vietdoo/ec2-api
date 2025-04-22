@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis
+    ports:
+      - "${VEC2_REDIS_PORT}:${VEC2_REDIS_PORT}"
+
+  db:
+    image: postgres:15.1-bullseye
+    environment:
+      - POSTGRES_USER=${VEC2_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${VEC2_POSTGRES_PWD}
+      - POSTGRES_DB=${VEC2_POSTGRES_DATABASE}
+      - POSTGRES_PORT=${VEC2_POSTGRES_PORT}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "${VEC2_POSTGRES_PORT}:${VEC2_POSTGRES_PORT}"
+    expose:
+      - ${VEC2_POSTGRES_PORT}
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-q",
+          "-d",
+          "${VEC2_POSTGRES_DATABASE}",
+          "-U",
+          "${VEC2_POSTGRES_USER}",
+        ]
+      timeout: 40s
+      interval: 2s
+      retries: 20
+
+volumes:
+  postgres_data:
+    driver: local

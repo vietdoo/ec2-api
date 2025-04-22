@@ -1,0 +1,16 @@
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.venv/
+.vscode/
+
+.minio/
+vec2_backoffice/
+tests/
+emails/node_modules/
+vec2/web_backoffice/node_modules/
+
+ip-geolocation.mmdb
+.env*
+.jkws.json
+.DS_Store
