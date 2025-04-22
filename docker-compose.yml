@@ -30,9 +30,22 @@ services:
           "-U",
           "${VEC2_POSTGRES_USER}",
         ]
-      timeout: 40s
-      interval: 2s
-      retries: 20
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    command: ["uvicorn", "vec2.app:app", "--host", "0.0.0.0", "--port", "10000"]
+    env_file:
+      - .env
+    ports:
+      - "10000:10000"
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app
 
 volumes:
   postgres_data:
