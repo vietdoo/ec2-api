@@ -43,6 +43,11 @@ jobs:
             ls -la && \
             echo '🔄 Pulling latest changes from git...' && \
             git pull origin main && \
+            echo '⚙️ Setting environment variables...' && \
+            export EXTERNAL_IP=http://\"\$(hostname -I | cut -f1 -d' ')\" && \
+            export CURR_DIR=\$(pwd) && \
+            echo 'ℹ️ EXTERNAL_IP: \$EXTERNAL_IP' && \
+            echo 'ℹ️ CURR_DIR: \$CURR_DIR' && \
             echo '🛑 Stopping existing Docker containers...' && \
             sudo docker compose down || true && \
             echo '🚀 Starting Docker containers...' && \
