@@ -55,3 +55,29 @@ async def get_user_test():
         created_at = datetime.now(),
     )
     
+    
+from vec2.kit.db.models.base import Model
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, func
+class Test(Model):
+    __tablename__ = "test"
+    id = Column(Integer, primary_key=True, index=True)
+    prompt = Column(String, nullable=False)
+    result = Column(String, nullable=False)
+    created_at = Column(DateTime, server_default=func.now())
+
+
+async def generate_text(prompt):
+    import requests
+    api_endpoint = f"https://text.pollinations.ai/prompt/{prompt}"
+    response = requests.get(api_endpoint)
+    return response.text
+
+@router.get("/test")
+async def get_test_test(prompt: str = 'this is a python knowledge test'):
+    result = await generate_text(prompt)
+    return Test(
+        id = 1,
+        prompt = prompt,
+        result = str(result),
+        created_at = datetime.now(),
+    )
