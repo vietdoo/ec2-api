@@ -24,6 +24,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "\
             cd ${{ secrets.EC2_PATH }} && \
             git pull origin main && \
-            docker compose down || true && \
-            docker compose up --build -d \
+            sudo docker compose down || true && \
+            sudo docker compose up --build -d \
           "
