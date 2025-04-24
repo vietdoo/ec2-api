@@ -37,8 +37,9 @@ jobs:
           echo "🌐 Connecting to EC2 instance..."
           ssh -v -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "\
             echo 'ℹ️ Hostname: \$(hostname)' && \
+            cd ec2-api && \
             echo '🔄 Pulling latest changes from git...' && \
-        
+            git pull origin  && \
             echo '⚙️ Setting environment variables...' && \
             export EXTERNAL_IP=\"http://\$(hostname -I | cut -f1 -d' ')\" && \
             export CURR_DIR=\"\$(pwd)\" && \
