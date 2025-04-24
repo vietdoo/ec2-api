@@ -11,19 +11,36 @@ jobs:
     environment: EC2
 
     steps:
-      - name: Checkout code
+      - name: 🚀 Checkout code
         uses: actions/checkout@v4
+        run: |
+          echo "📂 Checking out repository..."
+          echo "✅ Code checked out successfully!"
 
-      - name: Set up SSH
+      - name: 🔑 Set up SSH
         uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
-
-      - name: Deploy on EC2 via SSH
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "\
+          echo "🔐 Setting up SSH agent..."
+          ssh-add -l
+          echo "✅ SSH key loaded!"
+
+      - name: 🖥️ Deploy on EC2 via SSH
+        run: |
+          echo "🌐 Connecting to EC2 instance..."
+          ssh -v -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "\
+            echo 'ℹ️ Hostname: \$(hostname)' && \
+            echo '📂 Current directory: \$(pwd)' && \
+            echo '📜 Listing directories in \${{ secrets.EC2_PATH }}...' && \
             cd ${{ secrets.EC2_PATH }} && \
+            ls -la && \
+            echo '🔄 Pulling latest changes from git...' && \
             git pull origin main && \
+            echo '🛑 Stopping existing Docker containers...' && \
             sudo docker compose down || true && \
-            sudo docker compose up --build -d \
+            echo '🚀 Starting Docker containers...' && \
+            sudo docker compose up --build -d && \
+            echo '✅ Deployment completed!' \
           "
+          echo "🎉 Deployment to EC2 finished successfully!"
