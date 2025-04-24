@@ -15,9 +15,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Ensures full history for git operations
+
+      - name: 📂 Log checkout completion
         run: |
-          echo "📂 Checking out repository..."
-          echo "✅ Code checked out successfully!"
+          echo "📂 Repository checked out"
+          echo "✅ Code checkout completed successfully!"
 
       - name: 🔑 Set up SSH
         uses: webfactory/ssh-agent@v0.8.0
