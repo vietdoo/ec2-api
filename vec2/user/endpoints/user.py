@@ -1,4 +1,5 @@
 from fastapi import Depends
+from fastapi_cache.decorator import cache
 
 # from vec2.auth.dependencies import Authenticator, WebUser
 # from vec2.auth.models import AuthSubject
@@ -46,6 +47,7 @@ router = APIRouter()
 
 import random
 @router.get("/me")
+@cache(expire=120)
 async def get_user_test():
     return User(
         id = 1,
@@ -66,12 +68,15 @@ class Test(Model):
     created_at = Column(DateTime, server_default=func.now())
 
 
+
 async def generate_text(prompt):
     import requests
     api_endpoint = f"https://text.pollinations.ai/prompt/{prompt}"
     response = requests.get(api_endpoint)
     return response.text
 
+
+@cache(expire=120)
 @router.get("/test")
 async def get_test_test(prompt: str = 'this is a python knowledge test'):
     result = await generate_text(prompt)
