@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: 🚀 Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensures full history for git operations
         run: |
           echo "📂 Checking out repository..."
           echo "✅ Code checked out successfully!"
@@ -21,8 +23,10 @@ jobs:
         uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: 🛠️ Debug SSH key
         run: |
-          echo "🔐 Setting up SSH agent..."
+          echo "🔐 Verifying SSH agent..."
           ssh-add -l
           echo "✅ SSH key loaded!"
 
