@@ -50,7 +50,7 @@ async def get_user_test():
     return User(
         id = 1,
         email = f"test{random.randint(1, 999)}@example.com",
-        hashed_password = "test",
+        hashed_password = "is_active",
         is_active = True,
         created_at = datetime.now(),
     )
