@@ -38,7 +38,7 @@ jobs:
           ssh -v -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "\
             echo 'ℹ️ Hostname: \$(hostname)' && \
             echo '🔄 Pulling latest changes from git...' && \
-            git pull origin main && \
+        
             echo '⚙️ Setting environment variables...' && \
             EXTERNAL_IP=http://\"\$(hostname -I | cut -f1 -d' ')\" && \
             CURR_DIR=\$(pwd) && \
