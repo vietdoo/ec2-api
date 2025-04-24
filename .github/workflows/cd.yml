@@ -37,10 +37,6 @@ jobs:
           echo "🌐 Connecting to EC2 instance..."
           ssh -v -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "\
             echo 'ℹ️ Hostname: \$(hostname)' && \
-            echo '📂 Current directory: \$(pwd)' && \
-            echo '📜 Listing directories in \${{ secrets.EC2_PATH }}...' && \
-            cd ${{ secrets.EC2_PATH }} && \
-            ls -la && \
             echo '🔄 Pulling latest changes from git...' && \
             git pull origin main && \
             echo '⚙️ Setting environment variables...' && \
